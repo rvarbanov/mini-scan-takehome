@@ -96,5 +96,11 @@ select * from scans;
 
 ## To improve
 - [ ] Use worker pool and channel to process messages
+- [ ] Add Metrics to track and alert on processing errors, latency, health, etc.
+- [ ] Add structured logging
+- [ ] Add graceful shutdown
+- [ ] Add healthcheck endpoint
+- [ ] Add retry logic for processing messages
+  - [ ] Add backoff logic
+  - [ ] Add max retries
 - [ ] Add audit table to track scan changes
-

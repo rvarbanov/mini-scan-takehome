@@ -58,11 +58,11 @@ func main() {
 			panic(err)
 		}
 
-		// TODO: remove, when done testing
-		fmt.Printf("Published scan: IP=%s, Port=%d, Service=%s, Version=%d\n",
+		fmt.Printf("Published scan: IP=%s, Port=%d, Service=%s, Version=%d, Data=%s\n",
 			scan.Ip,
 			scan.Port,
 			scan.Service,
-			scan.DataVersion)
+			scan.DataVersion,
+			scan.Data)
 	}
 }

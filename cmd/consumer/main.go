@@ -10,20 +10,6 @@ import (
 	"github.com/rvarbanov/mini-scan-takehome/internal/processor"
 )
 
-// TODO: move to env/config
-const (
-/*
-projectID = "test-project"
-subID     = "scan-sub"
-
-dbHost = "db"
-dbPort = "5432"
-dbUser = "postgres"
-dbPass = "postgres"
-dbName = "mini_scan"
-*/
-)
-
 func main() {
 	envs := env.GetEnvs()
 

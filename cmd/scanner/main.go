@@ -9,7 +9,7 @@ import (
 	"time"
 
 	"cloud.google.com/go/pubsub"
-	"github.com/censys/scan-takehome/pkg/scanning"
+	"github.com/rvarbanov/mini-scan-takehome/pkg/scanning"
 )
 
 var (
@@ -57,5 +57,12 @@ func main() {
 		if err != nil {
 			panic(err)
 		}
+
+		// TODO: remove, when done testing
+		fmt.Printf("Published scan: IP=%s, Port=%d, Service=%s, Version=%d\n",
+			scan.Ip,
+			scan.Port,
+			scan.Service,
+			scan.DataVersion)
 	}
 }

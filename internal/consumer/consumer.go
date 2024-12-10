@@ -34,14 +34,16 @@ func New(projectID string, subID string, processor *processor.Processor) (*Consu
 }
 
 func (c *Consumer) Start(ctx context.Context) error {
-	return c.sub.Receive(ctx, func(ctx context.Context, msg *pubsub.Message) {
-		if err := c.processor.ProcessMessage(msg); err != nil {
-			log.Printf("Failed to process message: %v", err)
-			msg.Nack()
-		} else {
-			msg.Ack()
-		}
-	})
+	return c.sub.Receive(ctx, c.receiveHandler)
+}
+
+func (c *Consumer) receiveHandler(ctx context.Context, msg *pubsub.Message) {
+	if err := c.processor.ProcessMessage(ctx, msg); err != nil {
+		log.Printf("Failed to process message: %v", err)
+		msg.Nack()
+	} else {
+		msg.Ack()
+	}
 }
 
 func (c *Consumer) Close() {

@@ -35,17 +35,49 @@ services:
       mk-topic:
         condition: service_completed_successfully
     environment:
-      PUBSUB_EMULATOR_HOST: pubsub:8085
-      PUBSUB_PROJECT_ID: test-project
+      - PUBSUB_EMULATOR_HOST=pubsub:8085
+      - PUBSUB_PROJECT_ID=test-project
     build:
       context: .
       dockerfile: ./cmd/scanner/Dockerfile
   
+  # db
+  db:
+    image: postgres:16-alpine
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB_NAME=mini_scan
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
   # Runs the "consumer"
   consumer:
     depends_on:
+      db:
+        condition: service_healthy
       mk-subscription:
         condition: service_completed_successfully
+    environment:
+      - PUBSUB_EMULATOR_HOST=pubsub:8085
+      - PUBSUB_PROJECT_ID=test-project
+      - POSTGRES_HOST=db
+      - POSTGRES_PORT=5432
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB_NAME=mini_scan
     build:
       context: .
       dockerfile: ./cmd/consumer/Dockerfile
+
+
+volumes:
+  postgres_data:

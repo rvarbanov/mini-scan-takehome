@@ -6,6 +6,7 @@ import (
 	"os"
 
 	"github.com/rvarbanov/mini-scan-takehome/internal/consumer"
+	"github.com/rvarbanov/mini-scan-takehome/internal/db"
 	"github.com/rvarbanov/mini-scan-takehome/internal/processor"
 )
 
@@ -20,7 +21,22 @@ func main() {
 	// Set pubsub emulator host
 	os.Setenv("PUBSUB_EMULATOR_HOST", pubSubEmulatorHost)
 
-	proc := processor.New()
+	// TODO: move to env/config
+	dbHost := "db"
+	dbPort := "5432"
+	dbUser := "postgres"
+	dbPass := "postgres"
+	dbName := "mini_scan"
+
+	db := db.NewDB(
+		dbHost,
+		dbPort,
+		dbUser,
+		dbPass,
+		dbName,
+	)
+
+	proc := processor.New(db)
 
 	cons, err := consumer.New(projectID, subID, proc)
 	if err != nil {

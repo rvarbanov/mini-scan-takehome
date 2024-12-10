@@ -45,3 +45,58 @@ To help set expectations, we believe you should aim to take no more than 4 hours
 We understand that you have other responsibilities, so if you think you’ll need more than 5 business days, just let us know when you expect to send a reply.
 
 Please don’t hesitate to ask any follow-up questions for clarification.
+
+---
+
+## To build and run
+
+```bash
+make build
+make run
+```
+
+## To run tests
+
+```bash
+make test
+```
+## To do
+- [ ] Add a db migrarion
+
+## DB
+```bash
+make db-exec
+```
+
+After the app is running, you can run the following command to create the table
+db migration
+```bash
+make db-migrate
+```
+
+To exec into the db container
+```bash
+make db-exec
+```
+
+table
+```sql
+select * from scans;
+```
+
+```sql
+mini_scan=# select * from scan limit 5;
+    ip     | port  | service |              data              | timestamp  |          created_at           |          updated_at           
+-----------+-------+---------+--------------------------------+------------+-------------------------------+-------------------------------
+ 1.1.1.32  | 50083 | DNS     | "c2VydmljZSByZXNwb25zZTogMTc=" | 1733862724 | 2024-12-10 20:32:04.875386+00 | 2024-12-10 20:32:04.849501+00
+ 1.1.1.94  | 20333 | SSH     | "c2VydmljZSByZXNwb25zZTogOTc=" | 1733862725 | 2024-12-10 20:32:05.832487+00 | 2024-12-10 20:32:05.832147+00
+ 1.1.1.198 | 25332 | HTTP    | service response: 70           | 1733862726 | 2024-12-10 20:32:06.807043+00 | 2024-12-10 20:32:06.806723+00
+ 1.1.1.81  | 47600 | SSH     | service response: 92           | 1733862727 | 2024-12-10 20:32:07.84021+00  | 2024-12-10 20:32:07.839839+00
+ 1.1.1.114 | 48560 | SSH     | "c2VydmljZSByZXNwb25zZTogMzY=" | 1733862728 | 2024-12-10 20:32:08.814121+00 | 2024-12-10 20:32:08.813847+00
+(5 rows)
+```
+
+## To improve
+- [ ] Use worker pool and channel to process messages
+- [ ] Add audit table to track scan changes
+

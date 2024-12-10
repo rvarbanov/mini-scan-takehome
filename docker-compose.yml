@@ -69,6 +69,8 @@ services:
     environment:
       - PUBSUB_EMULATOR_HOST=pubsub:8085
       - PUBSUB_PROJECT_ID=test-project
+      - PUBSUB_SUB_ID=scan-sub
+
       - POSTGRES_HOST=db
       - POSTGRES_PORT=5432
       - POSTGRES_USER=postgres

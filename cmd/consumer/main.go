@@ -3,42 +3,41 @@ package main
 import (
 	"context"
 	"log"
-	"os"
 
 	"github.com/rvarbanov/mini-scan-takehome/internal/consumer"
 	"github.com/rvarbanov/mini-scan-takehome/internal/db"
+	"github.com/rvarbanov/mini-scan-takehome/internal/env"
 	"github.com/rvarbanov/mini-scan-takehome/internal/processor"
 )
 
 // TODO: move to env/config
 const (
-	pubSubEmulatorHost = "pubsub:8085"
-	projectID          = "test-project"
-	subID              = "scan-sub"
+/*
+projectID = "test-project"
+subID     = "scan-sub"
+
+dbHost = "db"
+dbPort = "5432"
+dbUser = "postgres"
+dbPass = "postgres"
+dbName = "mini_scan"
+*/
 )
 
 func main() {
-	// Set pubsub emulator host
-	os.Setenv("PUBSUB_EMULATOR_HOST", pubSubEmulatorHost)
-
-	// TODO: move to env/config
-	dbHost := "db"
-	dbPort := "5432"
-	dbUser := "postgres"
-	dbPass := "postgres"
-	dbName := "mini_scan"
+	envs := env.GetEnvs()
 
 	db := db.NewDB(
-		dbHost,
-		dbPort,
-		dbUser,
-		dbPass,
-		dbName,
+		envs.DB.Host,
+		envs.DB.Port,
+		envs.DB.User,
+		envs.DB.Pass,
+		envs.DB.Name,
 	)
 
 	proc := processor.New(db)
 
-	cons, err := consumer.New(projectID, subID, proc)
+	cons, err := consumer.New(envs.PubSub.ProjectID, envs.PubSub.SubID, proc)
 	if err != nil {
 		log.Fatalf("Failed to create consumer: %v", err)
 	}

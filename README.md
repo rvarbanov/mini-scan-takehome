@@ -48,42 +48,31 @@ Please don’t hesitate to ask any follow-up questions for clarification.
 
 ---
 
-## To build and run
+## Run Tests
+
+```bash
+make test
+```
+
+## Build and Run
 
 ```bash
 make build
 make run
 ```
 
-## To run tests
-
-```bash
-make test
-```
-## To do
-- [ ] Add a db migrarion
-
-## DB
-```bash
-make db-exec
-```
-
-After the app is running, you can run the following command to create the table
-db migration
+## Database 
+Run migrations after app is running
 ```bash
 make db-migrate
 ```
 
-To exec into the db container
+Exec into the db container
 ```bash
 make db-exec
 ```
 
-table
-```sql
-select * from scans;
-```
-
+Example data
 ```sql
     ip     | port  | service |         data         | timestamp  |          created_at           |          updated_at           
 -----------+-------+---------+----------------------+------------+-------------------------------+-------------------------------

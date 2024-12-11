@@ -30,22 +30,22 @@ func (suite *ProcessorTestSuite) SetupTest() {
 
 func (suite *ProcessorTestSuite) TestProcessMessage_v1() {
 	suite.db.EXPECT().StoreScan(gomock.Any(), gomock.Any()).Return(nil)
-	pubsubMessage := &pubsub.Message{Data: temp1()}
+	pubsubMessage := &pubsub.Message{Data: getMockDataV1()}
 
 	suite.processor.ProcessMessage(suite.ctx, pubsubMessage)
 }
 
 func (suite *ProcessorTestSuite) TestProcessMessage_v2() {
 	suite.db.EXPECT().StoreScan(gomock.Any(), gomock.Any()).Return(nil)
-	pubsubMessage := &pubsub.Message{Data: temp2()}
+	pubsubMessage := &pubsub.Message{Data: getMockDataV2()}
 
 	suite.processor.ProcessMessage(suite.ctx, pubsubMessage)
 }
 
-func temp1() []byte {
+func getMockDataV1() []byte {
 	return []byte(`{"ip":"127.0.0.1","port":80,"service":"http","timestamp":1733858499, "data_version": 1, "data": {"response_bytes_utf8": "aGVsbG8gd29ybGQ="}}`)
 }
 
-func temp2() []byte {
+func getMockDataV2() []byte {
 	return []byte(`{"ip":"127.0.0.1","port":80,"service":"http","timestamp":1733858499, "data_version": 2, "data": {"response_str": "service response: 61"}}`)
 }

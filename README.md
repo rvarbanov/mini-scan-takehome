@@ -85,6 +85,11 @@ Example data
 
 ## To improve
 - [ ] Use worker pool and channel to process messages
+- [ ] Add a DAO layer
+- [ ] Add integration tests
+- [ ] Add end to end tests
+- [ ] Add audit table to track scan changes
+- [ ] Add RESTful API to retrive and update data
 - [ ] Add Metrics to track and alert on processing errors, latency, health, etc.
 - [ ] Add structured logging
 - [ ] Add graceful shutdown
@@ -92,4 +97,3 @@ Example data
 - [ ] Add retry logic for processing messages
   - [ ] Add backoff logic
   - [ ] Add max retries
-- [ ] Add audit table to track scan changes
